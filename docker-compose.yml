@@ -1,0 +1,30 @@
+services:
+  n8n:
+    image: docker.n8n.io/n8nio/n8n:1.89.2
+    container_name: tracelabs-n8n
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    ports:
+      - "127.0.0.1:5678:5678"
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      - GENERIC_TIMEZONE=${GENERIC_TIMEZONE:-Australia/Melbourne}
+      - TZ=${TZ:-Australia/Melbourne}
+      - N8N_ENCRYPTION_KEY=${N8N_ENCRYPTION_KEY:-}
+      - N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
+      - N8N_RUNNERS_ENABLED=true
+      - N8N_BLOCK_ENV_ACCESS_IN_NODE=false
+      - N8N_DIAGNOSTICS_ENABLED=false
+      - N8N_VERSION_NOTIFICATIONS_ENABLED=false
+      - NODE_FUNCTION_ALLOW_EXTERNAL=
+    volumes:
+      - n8n_storage:/home/node/.n8n
+      - ./workflows:/home/node/workflows:ro
+
+volumes:
+  n8n_storage:
