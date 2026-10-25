@@ -1,0 +1,54 @@
+{
+  "referral_valid": {
+    "first_name": "Lachlan",
+    "last_name": "Vance",
+    "date_of_birth": "1984-06-19",
+    "medicare_number": "2123 45670 1 1",
+    "referring_provider_no": "242662AF",
+    "referral_date": "2026-10-14",
+    "urgency_tier": "priority",
+    "phone": "0412 345 678",
+    "notes": "L4/L5 disc prolapse referral for specialist orthopaedic review."
+  },
+  "referral_hallucinated": {
+    "first_name": "Lachlan",
+    "last_name": "Vance",
+    "date_of_birth": "2026-02-31",
+    "medicare_number": "2123 45679 1 1",
+    "referring_provider_no": "242662AZ",
+    "referral_date": "2026-10-14",
+    "urgency_tier": "priority"
+  },
+  "invoice_valid": {
+    "supplier_name": "Melbourne Medical Supplies Pty Ltd",
+    "supplier_abn": "51 824 753 556",
+    "invoice_number": "INV-2026-1049",
+    "issue_date": "2026-10-14",
+    "due_date": "2026-11-14",
+    "currency": "AUD",
+    "subtotal_cents": 100000,
+    "gst_cents": 10000,
+    "total_cents": 110000
+  },
+  "invoice_mismatched": {
+    "supplier_name": "Melbourne Medical Supplies Pty Ltd",
+    "supplier_abn": "51 824 753 557",
+    "invoice_number": "INV-2026-1049",
+    "issue_date": "2026-10-14",
+    "currency": "AUD",
+    "subtotal_cents": 100000,
+    "gst_cents": 10000,
+    "total_cents": 125000
+  },
+  "enquiry_qualified": {
+    "contact_name": "Dr Sarah Chen",
+    "contact_email": "sarah.chen@melbournespine.com.au",
+    "contact_phone": "0412 345 678",
+    "company_name": "Melbourne Spine & Sports Clinic",
+    "intent_tier": "high_intent",
+    "urgency_score": 9,
+    "systems_mentioned": ["Cliniko", "Xero", "Slack"],
+    "summary_one_line": "Multi-practitioner clinic looking to automate 180 GP PDF referrals/week into Cliniko.",
+    "draft_reply": "Hi Dr Chen, thanks for reaching out. We can deploy a self-hosted n8n referral pipeline into your AU1 Cliniko instance within 5 business days."
+  }
+}

@@ -1,0 +1,351 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 420" width="1200" height="420" fill="none" role="img" aria-labelledby="hero-title hero-desc">
+  <title id="hero-title">TensorForge · Self-Hosted n8n Workflows for Australian Operations</title>
+  <desc id="hero-desc">Importable n8n workflow blueprints for Cliniko referrals, Xero accounts payable, and HubSpot lead triage with built-in Medicare and ATO ABN checksum gates.</desc>
+
+  <defs>
+    <clipPath id="workbench-clip">
+      <rect x="24" y="18" width="1152" height="384" rx="24" />
+    </clipPath>
+
+    <!-- Ultra-fine 28px dot grid matching global.css .bg-dot-canvas -->
+    <pattern id="dot-canvas" x="0" y="0" width="28" height="28" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1" fill="#FFFFFF" fill-opacity="0.065" />
+    </pattern>
+
+    <!-- Fine 32px structural grid inside telemetry area -->
+    <pattern id="grid-panel" x="0" y="0" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M 32 0 L 0 0 0 32" fill="none" stroke="#FFFFFF" stroke-opacity="0.03" stroke-width="1" />
+    </pattern>
+
+    <!-- Radial vignette mask for the dot canvas -->
+    <radialGradient id="vignette-grad" cx="50%" cy="50%" r="58%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="1" />
+      <stop offset="68%" stop-color="#FFFFFF" stop-opacity="0.65" />
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.08" />
+    </radialGradient>
+    <mask id="vignette">
+      <rect x="24" y="18" width="1152" height="384" fill="url(#vignette-grad)" />
+    </mask>
+
+    <!-- Ambient lighting matching .card-shine and .glow-accent-top -->
+    <radialGradient id="glow-top-left" cx="14%" cy="6%" r="55%">
+      <stop offset="0%" stop-color="#E87820" stop-opacity="0.14" />
+      <stop offset="55%" stop-color="#E87820" stop-opacity="0.03" />
+      <stop offset="100%" stop-color="#050D15" stop-opacity="0" />
+    </radialGradient>
+
+    <radialGradient id="glow-bottom-right" cx="84%" cy="88%" r="52%">
+      <stop offset="0%" stop-color="#E87820" stop-opacity="0.13" />
+      <stop offset="50%" stop-color="#213048" stop-opacity="0.22" />
+      <stop offset="100%" stop-color="#050D15" stop-opacity="0" />
+    </radialGradient>
+
+    <radialGradient id="glow-telemetry-green" cx="82%" cy="28%" r="28%">
+      <stop offset="0%" stop-color="#22C55E" stop-opacity="0.09" />
+      <stop offset="100%" stop-color="#050D15" stop-opacity="0" />
+    </radialGradient>
+
+    <!-- Workbench base surface gradient -->
+    <linearGradient id="workbench-bg" x1="24" y1="18" x2="1176" y2="402" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0B1520" />
+      <stop offset="60%" stop-color="#08111B" />
+      <stop offset="100%" stop-color="#060E17" />
+    </linearGradient>
+
+    <!-- Specular hardware card surface -->
+    <linearGradient id="hardware-card-bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#112031" />
+      <stop offset="100%" stop-color="#0B1520" />
+    </linearGradient>
+
+    <linearGradient id="hardware-card-front-bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#132336" />
+      <stop offset="100%" stop-color="#0C1724" />
+    </linearGradient>
+
+    <!-- Top copper + glass specular rim gradients -->
+    <linearGradient id="copper-rim" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.04" />
+      <stop offset="22%" stop-color="#E87820" stop-opacity="0.48" />
+      <stop offset="50%" stop-color="#F5891E" stop-opacity="0.65" />
+      <stop offset="78%" stop-color="#E87820" stop-opacity="0.42" />
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.05" />
+    </linearGradient>
+
+    <linearGradient id="card-top-rim" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.10" />
+      <stop offset="35%" stop-color="#E87820" stop-opacity="0.45" />
+      <stop offset="70%" stop-color="#FFFFFF" stop-opacity="0.12" />
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.02" />
+    </linearGradient>
+
+    <!-- Deep hardware elevation shadows -->
+    <filter id="workbench-shadow" x="-4%" y="-4%" width="108%" height="112%">
+      <feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#000000" flood-opacity="0.65" />
+    </filter>
+
+    <filter id="card-elevation" x="-8%" y="-8%" width="116%" height="124%">
+      <feDropShadow dx="0" dy="12" stdDeviation="14" flood-color="#02060A" flood-opacity="0.78" />
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.5" />
+    </filter>
+
+    <filter id="front-card-elevation" x="-10%" y="-10%" width="120%" height="128%">
+      <feDropShadow dx="-4" dy="16" stdDeviation="16" flood-color="#010408" flood-opacity="0.88" />
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#000000" flood-opacity="0.65" />
+    </filter>
+
+    <filter id="packet-glow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="2.5" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <!-- Copper trace connecting Card 1 to Card 2 -->
+    <path id="inter-card-trace" d="M 656 154 C 626 154, 626 286, 686 286" />
+  </defs>
+
+  <style>
+    .font-sans {
+      font-family: 'Satoshi', -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, sans-serif;
+    }
+    .font-mono {
+      font-family: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+    @keyframes dashFlow {
+      from { stroke-dashoffset: 28; }
+      to { stroke-dashoffset: 0; }
+    }
+    .wire-flow {
+      animation: dashFlow 1.5s linear infinite;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .wire-flow {
+        animation: none;
+      }
+      .smil-packet {
+        display: none;
+      }
+    }
+  </style>
+
+  <!-- Deep Navy Outer Canvas -->
+  <rect width="1200" height="420" fill="#050D15" />
+
+  <!-- Outer Elevated Workbench Container -->
+  <rect x="24" y="18" width="1152" height="384" rx="24" fill="url(#workbench-bg)" stroke="#213048" stroke-width="1.5" filter="url(#workbench-shadow)" />
+
+  <!-- Inner Clipped Textures & Ambient Glows -->
+  <g clip-path="url(#workbench-clip)">
+    <rect x="24" y="18" width="1152" height="384" fill="url(#dot-canvas)" mask="url(#vignette)" />
+    <rect x="640" y="18" width="536" height="384" fill="url(#grid-panel)" opacity="0.65" />
+    <rect x="24" y="18" width="1152" height="384" fill="url(#glow-top-left)" />
+    <rect x="24" y="18" width="1152" height="384" fill="url(#glow-bottom-right)" />
+    <rect x="24" y="18" width="1152" height="384" fill="url(#glow-telemetry-green)" />
+    <!-- Subtle inner 1px glass perimeter -->
+    <rect x="25.5" y="19.5" width="1149" height="381" rx="22.5" stroke="#FFFFFF" stroke-opacity="0.07" stroke-width="1" />
+    <!-- Vertical architectural partition line between 58/42 columns -->
+    <line x1="636" y1="18" x2="636" y2="402" stroke="#172030" stroke-width="1" stroke-dasharray="4 4" />
+  </g>
+
+  <!-- 1px Top Specular Copper/Glass Rim -->
+  <line x1="88" y1="18.75" x2="1112" y2="18.75" stroke="url(#copper-rim)" stroke-width="1.5" />
+
+  <!-- ===================================================================== -->
+  <!-- LEFT COLUMN (x=68..616): BRAND MARK, TWO-TONE HEADLINE, STACK STRIP   -->
+  <!-- ===================================================================== -->
+
+  <!-- Official TensorForge Header Mark -->
+  <g transform="translate(68, 56)">
+    <g transform="scale(1.42)">
+      <path d="M6 7h5a3 3 0 0 1 3 3v4a3 3 0 0 0 3 3h1" stroke="#E87820" stroke-width="1.8" stroke-linecap="round" />
+      <path d="M6 17h4" stroke="#E87820" stroke-width="1.8" stroke-linecap="round" opacity="0.55" />
+      <circle cx="4.5" cy="7" r="2.2" fill="#050D15" stroke="#E87820" stroke-width="1.8" />
+      <circle cx="4.5" cy="17" r="2.2" fill="#050D15" stroke="#E87820" stroke-width="1.8" opacity="0.65" />
+      <circle cx="19.5" cy="17" r="2.5" fill="#E87820">
+        <animate attributeName="opacity" values="1;0.4;1" dur="2.6s" repeatCount="indefinite" />
+      </circle>
+    </g>
+    <text x="42" y="24" class="font-mono" fill="#EEF0F4" font-size="19" font-weight="700" letter-spacing="3">TENSORFORGE</text>
+    <rect x="214" y="16" width="6.5" height="6.5" fill="#E87820" />
+
+    <!-- Subtle inline domain telemetry tag -->
+    <line x1="238" y1="10" x2="238" y2="28" stroke="#213048" stroke-width="1" />
+    <text x="250" y="23" class="font-mono" fill="#8B95A7" font-size="11.5" font-weight="500" letter-spacing="0.3">
+      tensorforge.dev <tspan fill="#E87820">·</tspan> Melbourne, AU
+    </text>
+  </g>
+
+  <!-- Two-Tone Light Display Headline (Zero eyebrow, -1.2 tracking) -->
+  <g class="font-sans">
+    <text x="68" y="142" fill="#94A3B8" font-size="42" font-weight="300" letter-spacing="-1.2">
+      Self-hosted n8n workflows
+    </text>
+    <text x="68" y="192" fill="#EEF0F4" font-size="42" font-weight="400" letter-spacing="-1.2">
+      for Australian operations.
+    </text>
+  </g>
+
+  <!-- Crisp Subcopy with #CBD5E1 highlights -->
+  <text x="68" y="236" class="font-sans" fill="#8B95A7" font-size="15" font-weight="400">
+    <tspan x="68" dy="0">Importable <tspan fill="#CBD5E1" font-weight="500">n8n blueprints</tspan> for <tspan fill="#CBD5E1" font-weight="500">Cliniko</tspan> referrals, <tspan fill="#CBD5E1" font-weight="500">Xero</tspan> accounts payable,</tspan>
+    <tspan x="68" dy="24">and <tspan fill="#CBD5E1" font-weight="500">HubSpot</tspan> lead triage, with built-in Services Australia Medicare,</tspan>
+    <tspan x="68" dy="24">ATO ABN modulo-89, and Slack dead-letter quarantine gates.</tspan>
+  </text>
+
+  <!-- Bottom-Left Inline Vector Stack Strip -->
+  <g transform="translate(68, 322)">
+    <rect x="0" y="0" width="536" height="44" rx="12" fill="#071019" stroke="#172030" stroke-width="1.2" />
+    <line x1="16" y1="0.6" x2="520" y2="0.6" stroke="#FFFFFF" stroke-opacity="0.06" stroke-width="1" />
+
+    <!-- 1. n8n -->
+    <g transform="translate(18, 12)">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="#E87820">
+        <path d="M21.4737 5.6842c-1.1772 0-2.1663.8051-2.4468 1.8947h-2.8955c-1.235 0-2.289.893-2.492 2.111l-.1038.623a1.263 1.263 0 0 1-1.246 1.0555H11.289c-.2805-1.0896-1.2696-1.8947-2.4468-1.8947s-2.1663.8051-2.4467 1.8947H4.973c-.2805-1.0896-1.2696-1.8947-2.4468-1.8947C1.1311 9.4737 0 10.6047 0 12s1.131 2.5263 2.5263 2.5263c1.1772 0 2.1663-.8051 2.4468-1.8947h1.4223c.2804 1.0896 1.2696 1.8947 2.4467 1.8947 1.1772 0 2.1663-.8051 2.4468-1.8947h1.0008a1.263 1.263 0 0 1 1.2459 1.0555l.1038.623c.203 1.218 1.257 2.111 2.492 2.111h.3692c.2804 1.0895 1.2696 1.8947 2.4468 1.8947 1.3952 0 2.5263-1.131 2.5263-2.5263s-1.131-2.5263-2.5263-2.5263c-1.1772 0-2.1664.805-2.4468 1.8947h-.3692a1.263 1.263 0 0 1-1.246-1.0555l-.1037-.623A2.52 2.52 0 0 0 13.9607 12a2.52 2.52 0 0 0 .821-1.4794l.1038-.623a1.263 1.263 0 0 1 1.2459-1.0555h2.8955c.2805 1.0896 1.2696 1.8947 2.4468 1.8947 1.3952 0 2.5263-1.131 2.5263-2.5263s-1.131-2.5263-2.5263-2.5263m0 1.2632a1.263 1.263 0 0 1 1.2631 1.2631 1.263 1.263 0 0 1-1.2631 1.2632 1.263 1.263 0 0 1-1.2632-1.2632 1.263 1.263 0 0 1 1.2632-1.2631M2.5263 10.7368A1.263 1.263 0 0 1 3.7895 12a1.263 1.263 0 0 1-1.2632 1.2632A1.263 1.263 0 0 1 1.2632 12a1.263 1.263 0 0 1 1.2631-1.2632m6.3158 0A1.263 1.263 0 0 1 10.1053 12a1.263 1.263 0 0 1-1.2632 1.2632A1.263 1.263 0 0 1 7.579 12a1.263 1.263 0 0 1 1.2632-1.2632m10.1053 3.7895a1.263 1.263 0 0 1 1.2631 1.2632 1.263 1.263 0 0 1-1.2631 1.2631 1.263 1.263 0 0 1-1.2632-1.2631 1.263 1.263 0 0 1 1.2632-1.2632" />
+      </svg>
+      <text x="27" y="14.5" class="font-sans" fill="#CBD5E1" font-size="12.5" font-weight="500">n8n</text>
+    </g>
+
+    <line x1="88" y1="10" x2="88" y2="34" stroke="#172030" stroke-width="1" />
+
+    <!-- 2. Claude -->
+    <g transform="translate(104, 14)">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="#CBD5E1">
+        <path d="m4.7144 15.9555 4.7174-2.6471.079-.2307-.079-.1275h-.2307l-.7893-.0486-2.6956-.0729-2.3375-.0971-2.2646-.1214-.5707-.1215-.5343-.7042.0546-.3522.4797-.3218.686.0608 1.5179.1032 2.2767.1578 1.6514.0972 2.4468.255h.3886l.0546-.1579-.1336-.0971-.1032-.0972L6.973 9.8356l-2.55-1.6879-1.3356-.9714-.7225-.4918-.3643-.4614-.1578-1.0078.6557-.7225.8803.0607.2246.0607.8925.686 1.9064 1.4754 2.4893 1.8336.3643.3035.1457-.1032.0182-.0728-.164-.2733-1.3539-2.4467-1.445-2.4893-.6435-1.032-.17-.6194c-.0607-.255-.1032-.4674-.1032-.7285L6.287.1335 6.6997 0l.9957.1336.419.3642.6192 1.4147 1.0018 2.2282 1.5543 3.0296.4553.8985.2429.8318.091.255h.1579v-.1457l.1275-1.706.2368-2.0947.2307-2.6957.0789-.7589.3764-.9107.7468-.4918.5828.2793.4797.686-.0668.4433-.2853 1.8517-.5586 2.9021-.3643 1.9429h.2125l.2429-.2429.9835-1.3053 1.6514-2.0643.7286-.8196.85-.9046.5464-.4311h1.0321l.759 1.1293-.34 1.1657-1.0625 1.3478-.8804 1.1414-1.2628 1.7-.7893 1.36.0729.1093.1882-.0183 2.8535-.607 1.5421-.2794 1.8396-.3157.8318.3886.091.3946-.3278.8075-1.967.4857-2.3072.4614-3.4364.8136-.0425.0304.0486.0607 1.5482.1457.6618.0364h1.621l3.0175.2247.7892.522.4736.6376-.079.4857-1.2142.6193-1.6393-.3886-3.825-.9107-1.3113-.3279h-.1822v.1093l1.0929 1.0686 2.0035 1.8092 2.5075 2.3314.1275.5768-.3218.4554-.34-.0486-2.2039-1.6575-.85-.7468-1.9246-1.621h-.1275v.17l.4432.6496 2.3436 3.5214.1214 1.0807-.17.3521-.6071.2125-.6679-.1214-1.3721-1.9246L14.38 17.959l-1.1414-1.9428-.1397.079-.674 7.2552-.3156.3703-.7286.2793-.6071-.4614-.3218-.7468.3218-1.4753.3886-1.9246.3157-1.53.2853-1.9004.17-.6314-.0121-.0425-.1397.0182-1.4328 1.9672-2.1796 2.9446-1.7243 1.8456-.4128.164-.7164-.3704.0667-.6618.4008-.5889 2.386-3.0357 1.4389-1.882.929-1.0868-.0062-.1579h-.0546l-6.3385 4.1164-1.1293.1457-.4857-.4554.0608-.7467.2307-.2429 1.9064-1.3114Z" />
+      </svg>
+      <text x="23" y="12.5" class="font-sans" fill="#CBD5E1" font-size="12.5" font-weight="500">Claude</text>
+    </g>
+
+    <line x1="188" y1="10" x2="188" y2="34" stroke="#172030" stroke-width="1" />
+
+    <!-- 3. Cliniko -->
+    <g transform="translate(206, 14)">
+      <circle cx="8" cy="8" r="6" fill="none" stroke="#22C55E" stroke-width="1.8" />
+      <path d="M8 5v6M5 8h6" stroke="#22C55E" stroke-width="1.8" stroke-linecap="round" />
+      <text x="22" y="12.5" class="font-sans" fill="#CBD5E1" font-size="12.5" font-weight="500">Cliniko</text>
+    </g>
+
+    <line x1="296" y1="10" x2="296" y2="34" stroke="#172030" stroke-width="1" />
+
+    <!-- 4. Xero -->
+    <g transform="translate(314, 14)">
+      <circle cx="8" cy="8" r="6" fill="none" stroke="#CBD5E1" stroke-width="1.8" />
+      <path d="M5.5 5.5l5 5M10.5 5.5l-5 5" stroke="#CBD5E1" stroke-width="1.6" stroke-linecap="round" />
+      <text x="22" y="12.5" class="font-sans" fill="#CBD5E1" font-size="12.5" font-weight="500">Xero</text>
+    </g>
+
+    <line x1="392" y1="10" x2="392" y2="34" stroke="#172030" stroke-width="1" />
+
+    <!-- 5. HubSpot + Slack -->
+    <g transform="translate(410, 14)">
+      <circle cx="8" cy="8" r="6" fill="none" stroke="#E87820" stroke-width="1.8" />
+      <circle cx="8" cy="8" r="2" fill="#E87820" />
+      <text x="22" y="12.5" class="font-sans" fill="#CBD5E1" font-size="12.5" font-weight="500">HubSpot · Slack</text>
+    </g>
+  </g>
+
+  <!-- ===================================================================== -->
+  <!-- RIGHT COLUMN (x=656..1148): 2 OVERLAPPING HARDWARE TELEMETRY CARDS    -->
+  <!-- ===================================================================== -->
+
+  <!-- CARD 1 (Back/Top): 01_clinical_referral · Cliniko EHR -->
+  <g filter="url(#card-elevation)">
+    <rect x="656" y="42" width="462" height="176" rx="16" fill="url(#hardware-card-bg)" stroke="#213048" stroke-width="1.5" />
+    <!-- 1px inner glass + copper top specular highlight -->
+    <rect x="657" y="43" width="460" height="174" rx="15" stroke="#FFFFFF" stroke-opacity="0.06" stroke-width="1" />
+    <line x1="680" y1="42.75" x2="1094" y2="42.75" stroke="url(#card-top-rim)" stroke-width="1.5" />
+
+    <!-- Card 1 Header Bar -->
+    <rect x="674" y="58" width="3" height="16" rx="1.5" fill="#E87820" />
+    <text x="686" y="70" class="font-mono" fill="#EEF0F4" font-size="12" font-weight="600">
+      01_clinical_referral <tspan fill="#8B95A7">·</tspan> <tspan fill="#E87820">Cliniko EHR</tspan>
+    </text>
+
+    <!-- Glowing Green COMMITTED · 420ms Badge -->
+    <rect x="960" y="54" width="142" height="24" rx="12" fill="#06281E" stroke="#22C55E" stroke-opacity="0.65" stroke-width="1" />
+    <circle cx="974" cy="66" r="3.5" fill="#22C55E">
+      <animate attributeName="opacity" values="1;0.35;1" dur="2s" repeatCount="indefinite" />
+    </circle>
+    <text x="984" y="70" class="font-mono" fill="#22C55E" font-size="10.5" font-weight="600">COMMITTED · 420ms</text>
+
+    <!-- Recessed Telemetry Well 1: Medicare Checksum -->
+    <rect x="674" y="88" width="428" height="52" rx="10" fill="#071019" stroke="#172030" stroke-width="1" />
+    <text x="688" y="108" class="font-mono" fill="#CBD5E1" font-size="11.5" font-weight="500">
+      medicare_number: <tspan fill="#EEF0F4" font-weight="600">"2123 45670 1 1"</tspan>
+    </text>
+    <rect x="1018" y="95" width="72" height="18" rx="4" fill="#06281E" stroke="#22C55E" stroke-opacity="0.5" stroke-width="1" />
+    <text x="1054" y="107.5" text-anchor="middle" class="font-mono" fill="#22C55E" font-size="9.5" font-weight="700">VERIFIED</text>
+    <text x="688" y="128" class="font-mono" fill="#8B95A7" font-size="10.5">
+      weights <tspan fill="#94A3B8">[1,3,7,9,1,3,7,9]</tspan> mod 10 = <tspan fill="#22C55E" font-weight="600">0</tspan> · Cliniko patient created
+    </text>
+
+    <!-- Recessed Telemetry Well 2: Provider Checksum -->
+    <rect x="674" y="148" width="428" height="52" rx="10" fill="#071019" stroke="#172030" stroke-width="1" />
+    <text x="688" y="168" class="font-mono" fill="#CBD5E1" font-size="11.5" font-weight="500">
+      provider_no: <tspan fill="#EEF0F4" font-weight="600">"242662AF"</tspan>
+    </text>
+    <rect x="1018" y="155" width="72" height="18" rx="4" fill="#06281E" stroke="#22C55E" stroke-opacity="0.5" stroke-width="1" />
+    <text x="1054" y="167.5" text-anchor="middle" class="font-mono" fill="#22C55E" font-size="9.5" font-weight="700">VERIFIED</text>
+    <text x="688" y="188" class="font-mono" fill="#8B95A7" font-size="10.5">
+      stem <tspan fill="#94A3B8">242662</tspan> · loc <tspan fill="#94A3B8">'A' (PLV 10)</tspan> · mod 11 = <tspan fill="#22C55E" font-weight="600">'F'</tspan>
+    </text>
+  </g>
+
+  <!-- Animated Copper Bezier Trace Connecting Top Card to Bottom Card -->
+  <g fill="none">
+    <use href="#inter-card-trace" stroke="#213048" stroke-width="2.5" />
+    <use href="#inter-card-trace" stroke="#E87820" stroke-width="2" stroke-dasharray="6 8" class="wire-flow" />
+    <circle r="3.5" fill="#E87820" filter="url(#packet-glow)" class="smil-packet">
+      <animateMotion dur="1.6s" repeatCount="indefinite">
+        <mpath href="#inter-card-trace" />
+      </animateMotion>
+    </circle>
+    <!-- Connection port on Card 1 left rim -->
+    <circle cx="656" cy="154" r="5" fill="#050D15" stroke="#E87820" stroke-width="2" />
+  </g>
+
+  <!-- CARD 2 (Front/Bottom Overlapping): 02_supplier_invoice · Xero ACCPAY -->
+  <g filter="url(#front-card-elevation)">
+    <rect x="686" y="204" width="462" height="172" rx="16" fill="url(#hardware-card-front-bg)" stroke="#213048" stroke-width="1.5" />
+    <!-- 1px inner glass + copper top specular highlight -->
+    <rect x="687" y="205" width="460" height="170" rx="15" stroke="#FFFFFF" stroke-opacity="0.08" stroke-width="1" />
+    <line x1="710" y1="204.75" x2="1124" y2="204.75" stroke="url(#copper-rim)" stroke-width="1.5" />
+
+    <!-- Connection port on Card 2 left rim -->
+    <circle cx="686" cy="286" r="5" fill="#050D15" stroke="#E87820" stroke-width="2" />
+
+    <!-- Card 2 Header Bar -->
+    <rect x="704" y="220" width="3" height="16" rx="1.5" fill="#E87820" />
+    <text x="716" y="232" class="font-mono" fill="#EEF0F4" font-size="12" font-weight="600">
+      02_supplier_invoice <tspan fill="#8B95A7">·</tspan> <tspan fill="#E87820">Xero ACCPAY</tspan>
+    </text>
+
+    <!-- Right Badge -->
+    <rect x="980" y="216" width="152" height="24" rx="12" fill="#071019" stroke="#213048" stroke-width="1" />
+    <circle cx="994" cy="228" r="3.5" fill="#E87820" />
+    <text x="1004" y="232" class="font-mono" fill="#CBD5E1" font-size="10.5" font-weight="600">ABN MOD-89 + GST</text>
+
+    <!-- Recessed Telemetry Well 1: Verified ATO ABN -->
+    <rect x="704" y="250" width="428" height="50" rx="10" fill="#071019" stroke="#172030" stroke-width="1" />
+    <text x="718" y="270" class="font-mono" fill="#CBD5E1" font-size="11.5" font-weight="500">
+      supplier_abn: <tspan fill="#EEF0F4" font-weight="600">"51 824 753 556"</tspan>
+    </text>
+    <rect x="1008" y="257" width="112" height="18" rx="4" fill="#06281E" stroke="#22C55E" stroke-opacity="0.55" stroke-width="1" />
+    <text x="1064" y="269.5" text-anchor="middle" class="font-mono" fill="#22C55E" font-size="9.5" font-weight="700">MOD-89 = 0</text>
+    <text x="718" y="289" class="font-mono" fill="#8B95A7" font-size="10.5">
+      ATO checksum verified · Xero <tspan fill="#22C55E" font-weight="600">ACCPAY DRAFT</tspan> bill staged
+    </text>
+
+    <!-- Recessed Telemetry Well 2: Quarantined GST Mismatch -->
+    <rect x="704" y="308" width="428" height="52" rx="10" fill="#071019" stroke="#172030" stroke-width="1" />
+    <text x="718" y="328" class="font-mono" fill="#FDE68A" font-size="11.5" font-weight="600">
+      total_cents: 125000 != 100000 + 10000
+    </text>
+    <rect x="1008" y="315" width="112" height="18" rx="4" fill="#291805" stroke="#F59E0B" stroke-opacity="0.65" stroke-width="1" />
+    <text x="1064" y="327.5" text-anchor="middle" class="font-mono" fill="#F59E0B" font-size="9.5" font-weight="700">QUARANTINED</text>
+    <text x="718" y="348" class="font-mono" fill="#8B95A7" font-size="10.5">
+      GST arithmetic mismatch -&gt; routed to <tspan fill="#F59E0B" font-weight="600">#finance-dlq</tspan>
+    </text>
+  </g>
+</svg>

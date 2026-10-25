@@ -1,0 +1,26 @@
+name: Verify n8n Workflows
+
+on:
+  push:
+    branches: ["main", "dev"]
+  pull_request:
+    branches: ["main", "dev"]
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: Node 22 · n8n Graph & Checksum Gate Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Execute n8n Workflow & Checksum Gate Suite
+        run: node --test tests/verify_workflows.mjs
