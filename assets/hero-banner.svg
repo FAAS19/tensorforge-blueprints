@@ -156,16 +156,15 @@
   <!-- LEFT COLUMN (x=68..616): BRAND MARK, TWO-TONE HEADLINE, STACK STRIP   -->
   <!-- ===================================================================== -->
 
-  <!-- Official TensorForge Header Mark -->
+  <!-- Official TensorForge Header Mark (Isometric Tensor-Anvil Monolith) -->
   <g transform="translate(68, 56)">
     <g transform="scale(1.42)">
-      <path d="M6 7h5a3 3 0 0 1 3 3v4a3 3 0 0 0 3 3h1" stroke="#E87820" stroke-width="1.8" stroke-linecap="round" />
-      <path d="M6 17h4" stroke="#E87820" stroke-width="1.8" stroke-linecap="round" opacity="0.55" />
-      <circle cx="4.5" cy="7" r="2.2" fill="#050D15" stroke="#E87820" stroke-width="1.8" />
-      <circle cx="4.5" cy="17" r="2.2" fill="#050D15" stroke="#E87820" stroke-width="1.8" opacity="0.65" />
-      <circle cx="19.5" cy="17" r="2.5" fill="#E87820">
-        <animate attributeName="opacity" values="1;0.4;1" dur="2.6s" repeatCount="indefinite" />
-      </circle>
+      <path d="M3 7L12 12V22L7.5 19.5V14.2L3 11.7V7Z" fill="#E87820" />
+      <path d="M12 12L21 7V11.7L16.5 14.2V19.5L12 22V12Z" fill="#A3581B" />
+      <path d="M12 2L16.14 4.3L7.14 9.3L3 7L12 2Z" fill="#F5891E" />
+      <path d="M17.76 5.2L21 7L12 12L8.76 10.2L17.76 5.2Z" fill="#EEF0F4">
+        <animate attributeName="opacity" values="1;0.65;1" dur="2.6s" repeatCount="indefinite" />
+      </path>
     </g>
     <text x="42" y="24" class="font-mono" fill="#EEF0F4" font-size="19" font-weight="700" letter-spacing="3">TENSORFORGE</text>
     <rect x="214" y="16" width="6.5" height="6.5" fill="#E87820" />
