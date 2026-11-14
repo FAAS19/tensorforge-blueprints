@@ -15,9 +15,10 @@ services:
     environment:
       - GENERIC_TIMEZONE=${GENERIC_TIMEZONE:-Australia/Melbourne}
       - TZ=${TZ:-Australia/Melbourne}
-      - N8N_ENCRYPTION_KEY=${N8N_ENCRYPTION_KEY:-}
+      - N8N_PAYLOAD_SIZE_MAX=16
       - N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
       - N8N_RUNNERS_ENABLED=true
+      # shortcut: $env open only for non-secret webhook/base URLs; API keys live in encrypted n8n credentials
       - N8N_BLOCK_ENV_ACCESS_IN_NODE=false
       - N8N_DIAGNOSTICS_ENABLED=false
       - N8N_VERSION_NOTIFICATIONS_ENABLED=false
