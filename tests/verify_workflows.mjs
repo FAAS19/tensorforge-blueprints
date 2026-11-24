@@ -24,7 +24,7 @@ function loadWorkflow(filename) {
   return JSON.parse(fs.readFileSync(fullPath, "utf8"));
 }
 
-function runCodeNode(workflow, codeNodeId, claudeExtractedObj) {
+function runCodeNodeRaw(workflow, codeNodeId, rawText) {
   const node = workflow.nodes.find((n) => n.id === codeNodeId);
   assert.ok(node, `Missing code node ${codeNodeId}`);
   const fn = new Function(
@@ -34,11 +34,15 @@ function runCodeNode(workflow, codeNodeId, claudeExtractedObj) {
   const mockInput = {
     item: {
       json: {
-        content: [{ text: JSON.stringify(claudeExtractedObj) }],
+        content: [{ text: rawText }],
       },
     },
   };
   return fn(mockInput);
+}
+
+function runCodeNode(workflow, codeNodeId, claudeExtractedObj) {
+  return runCodeNodeRaw(workflow, codeNodeId, JSON.stringify(claudeExtractedObj));
 }
 
 function evalN8nExpression(exprStr, { $json = {}, nodes = {}, $env = {} } = {}) {
@@ -378,4 +382,100 @@ test("Workflow 03: Service Enquiry normalises +61 AU phone, preserves unescaped 
   assert.equal(slackInjectionOut.json.status, "committed");
   assert.ok(!slackInjectionOut.json.lead.summary_one_line.includes("<!channel>"));
   assert.ok(slackInjectionOut.json.lead.summary_one_line.includes("&lt;!channel&gt;"));
+
+  // Australian landline and international +61 normalisation
+  const landlineOut = runCodeNode(wf, "code-lead-normaliser", {
+    ...fixtures.enquiry_qualified,
+    contact_phone: "(03) 9123 4567",
+  });
+  assert.equal(landlineOut.json.status, "committed");
+  assert.equal(landlineOut.json.lead.phone, "+61391234567");
+
+  const intlOut = runCodeNode(wf, "code-lead-normaliser", {
+    ...fixtures.enquiry_qualified,
+    contact_phone: "+61 412 345 678",
+  });
+  assert.equal(intlOut.json.status, "committed");
+  assert.equal(intlOut.json.lead.phone, "+61412345678");
+
+  // Invalid email and out-of-range urgency score must be quarantined
+  const badLeadMeta = runCodeNode(wf, "code-lead-normaliser", {
+    ...fixtures.enquiry_qualified,
+    contact_email: "not-an-email",
+    urgency_score: 11,
+  });
+  assert.equal(badLeadMeta.json.status, "quarantined_dlq");
+  const badLeadFields = new Set(badLeadMeta.json.violations.map((v) => v.field));
+  assert.ok(badLeadFields.has("contact_email"));
+  assert.ok(badLeadFields.has("urgency_score"));
+});
+
+test("Edge cases: malformed LLM output, leap-year DOB, Medicare prefix/IRN, and GST-free invoices", () => {
+  const gateSpecs = [
+    ["01_clinical_referral_to_cliniko.json", "code-medicare-provider-guard"],
+    ["02_supplier_invoice_to_xero.json", "code-abn-gst-guard"],
+    ["03_inbound_lead_triage_to_slack.json", "code-lead-normaliser"],
+  ];
+
+  // All 3 gates must fail closed on non-JSON or array LLM output
+  for (const [file, nodeId] of gateSpecs) {
+    const wf = loadWorkflow(file);
+    const badJson = runCodeNodeRaw(wf, nodeId, "{not valid json");
+    assert.equal(badJson.json.status, "quarantined_dlq", `${file}: invalid JSON must quarantine`);
+    assert.equal(badJson.json.violations[0].field, "__root__");
+
+    const arrayJson = runCodeNodeRaw(wf, nodeId, "[]");
+    assert.equal(arrayJson.json.status, "quarantined_dlq", `${file}: JSON array must quarantine`);
+    assert.equal(arrayJson.json.violations[0].field, "__root__");
+  }
+
+  // Workflow 01: leap-year DOB valid vs non-leap-year invalid, Medicare prefix & zero IRN
+  const wf01 = loadWorkflow("01_clinical_referral_to_cliniko.json");
+  const leapValid = runCodeNode(wf01, "code-medicare-provider-guard", {
+    ...fixtures.referral_valid,
+    date_of_birth: "2024-02-29",
+  });
+  assert.equal(leapValid.json.status, "committed");
+
+  const leapInvalid = runCodeNode(wf01, "code-medicare-provider-guard", {
+    ...fixtures.referral_valid,
+    date_of_birth: "2025-02-29",
+  });
+  assert.equal(leapInvalid.json.status, "quarantined_dlq");
+  assert.ok(leapInvalid.json.violations.some((v) => v.field === "date_of_birth"));
+
+  const badPrefix = runCodeNode(wf01, "code-medicare-provider-guard", {
+    ...fixtures.referral_valid,
+    medicare_number: "9123 45670 1 1",
+  });
+  assert.equal(badPrefix.json.status, "quarantined_dlq");
+  assert.ok(badPrefix.json.violations.some((v) => v.message.includes("2..6")));
+
+  const zeroIrn = runCodeNode(wf01, "code-medicare-provider-guard", {
+    ...fixtures.referral_valid,
+    medicare_number: "2123 45670 1 0",
+  });
+  assert.equal(zeroIrn.json.status, "quarantined_dlq");
+  assert.ok(zeroIrn.json.violations.some((v) => v.message.includes("IRN")));
+
+  // Workflow 02: GST-free medical/export invoice uses TaxType NONE; invalid currency & zero total quarantine
+  const wf02 = loadWorkflow("02_supplier_invoice_to_xero.json");
+  const gstFree = runCodeNode(wf02, "code-abn-gst-guard", {
+    ...fixtures.invoice_valid,
+    subtotal_cents: 100000,
+    gst_cents: 0,
+    total_cents: 100000,
+  });
+  assert.equal(gstFree.json.status, "committed");
+  assert.equal(gstFree.json.xero_invoice_payload.Invoices[0].LineItems[0].TaxType, "NONE");
+
+  const badCurrency = runCodeNode(wf02, "code-abn-gst-guard", {
+    ...fixtures.invoice_valid,
+    currency: "EUR",
+    total_cents: 0,
+  });
+  assert.equal(badCurrency.json.status, "quarantined_dlq");
+  const badInvFields = new Set(badCurrency.json.violations.map((v) => v.field));
+  assert.ok(badInvFields.has("currency"));
+  assert.ok(badInvFields.has("total_cents"));
 });
