@@ -56,6 +56,30 @@ docker compose up -d
 
 Then open `http://localhost:5678`, click **Import from File**, and select any workflow from [`workflows/`](workflows/).
 
+### Smoke-Test a Live Webhook
+
+Once a workflow is active in n8n and its `Header Auth` credential (`x-tensorforge-webhook-secret`) is set, POST a payload directly:
+
+```bash
+# 01: Clinical referral (POST /webhook/intake/clinical-referral)
+curl -X POST http://localhost:5678/webhook/intake/clinical-referral \
+  -H "Content-Type: application/json" \
+  -H "x-tensorforge-webhook-secret: YOUR_SECRET" \
+  -d '{"referral_text":"Patient Lachlan Vance, DOB 1984-06-19, Medicare 2123 45670 1 1, Provider 242662AF"}'
+
+# 02: Supplier invoice (POST /webhook/intake/supplier-invoice)
+curl -X POST http://localhost:5678/webhook/intake/supplier-invoice \
+  -H "Content-Type: application/json" \
+  -H "x-tensorforge-webhook-secret: YOUR_SECRET" \
+  -d '{"invoice_text":"Melbourne Medical Supplies Pty Ltd, ABN 51 824 753 556, INV-2026-1049, Subtotal $1000 + GST $100 = $1100 AUD"}'
+
+# 03: Inbound enquiry (POST /webhook/intake/service-enquiry)
+curl -X POST http://localhost:5678/webhook/intake/service-enquiry \
+  -H "Content-Type: application/json" \
+  -H "x-tensorforge-webhook-secret: YOUR_SECRET" \
+  -d '{"message":"Dr Sarah Chen (0412 345 678) - looking to automate 180 GP referrals/week into Cliniko"}'
+```
+
 ---
 
 ## 4. Verify the Checksum Gates Offline (Zero Dependencies)
